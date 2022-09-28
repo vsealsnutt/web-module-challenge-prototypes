@@ -15,9 +15,28 @@
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
+
+Person.prototype.eat = function(edible) {
+  if(this.stomach.length < 10) {
+    this.stomach.push(edible);
+  }
+}
+
+Person.prototype.poop = function() {
+  this.stomach = [];
+}
+
+Person.prototype.toString = function() {
+  return `${this.name}, ${this.age}`;
+}
+
+const mary = new Person('Mary', 50);
+console.log('task 1:', mary.toString());
 
 
 /*
@@ -36,8 +55,27 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
 
+Car.prototype.fill = function(gallons) {
+  this.tank = this.tank + gallons;
+}
+
+Car.prototype.drive = function(distance) {
+  const mileage = this.tank * this.milesPerGallon;
+  if(distance <= mileage) {
+    this.odometer = this.odometer + mileage;
+    this.tank = this.tank - (distance / this.milesPerGallon);
+  } else {
+    this.odometer = this.odometer + mileage;
+    this.tank = 0;
+    return `I ran out of feul at ${this.odometer}!`;
+  }
 }
 
 
